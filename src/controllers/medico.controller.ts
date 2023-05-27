@@ -38,10 +38,20 @@ export class MedicoController {
 
   async createMedico(req: Request, res: Response) {
     try {
-      const data = await this.medicoService.createMedico(req.body);
-      return this.httpResponse.Ok(res, data);
+      const verificarCorreo = await this.medicoService.findCorreo(
+        req.body.CorreoElectronico
+      );
+
+      if (!verificarCorreo) {
+        const data = await this.medicoService.createMedico(req.body);
+
+        return this.httpResponse.Ok(res, data);
+      }else{
+        return this.httpResponse.UserDenied(res,"No se puede crear este usuario por que el correo ya existe")
+      }
+
     } catch (e) {
-      console.error(e); 
+      console.error(e);
       return this.httpResponse.Error(res, e);
     }
   }
@@ -67,7 +77,9 @@ export class MedicoController {
   async deleteMedico(req: Request, res: Response) {
     const { id } = req.params;
     try {
-      const data: DeleteResult = await this.medicoService.deleteMedico(parseInt(id));
+      const data: DeleteResult = await this.medicoService.deleteMedico(
+        parseInt(id)
+      );
       if (!data.affected) {
         return this.httpResponse.NotFound(res, "Hay un error en actualizar");
       }

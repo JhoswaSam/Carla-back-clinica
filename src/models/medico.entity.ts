@@ -35,6 +35,9 @@ export class MedicoEntity extends EntityBase {
   @Column()
   CorreoElectronico!: string;
 
+  @Column({nullable:true})
+  Contrasenia!:string;
+
   @Column()
   Especialidad!: string;
 

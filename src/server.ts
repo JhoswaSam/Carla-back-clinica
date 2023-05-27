@@ -8,6 +8,7 @@ import cookieParser from "cookie-parser";
 import { DiagnosticoRouter } from "./router/diagnostico.router";
 import { MedicoRouter } from "./router/medico.router";
 import { PacienteRouter } from "./router/paciente.router";
+import { AuthRouter } from "./router/seguridad.router";
 
 
 /**
@@ -47,6 +48,7 @@ class ServerBootstrap extends ConfigServer{
             new DiagnosticoRouter().router,
             new MedicoRouter().router,
             new PacienteRouter().router,
+            new AuthRouter().router,
         ];
     }
 
