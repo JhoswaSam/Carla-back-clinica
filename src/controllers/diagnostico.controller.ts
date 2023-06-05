@@ -23,7 +23,9 @@ export class DiagnosticoController {
   async getDiagnosticoById(req: Request, res: Response) {
     const { id } = req.params;
     try {
-      const data = await this.diagnosticoService.findDiagnosticoById(parseInt(id));
+      const data = await this.diagnosticoService.findDiagnosticoById(
+        parseInt(id)
+      );
       if (!data) {
         return this.httpResponse.NotFound(res, "No existe datos");
       }
@@ -45,7 +47,10 @@ export class DiagnosticoController {
   async updateDiagnostico(req: Request, res: Response) {
     const { id } = req.params;
     try {
-      const data = await this.diagnosticoService.updateDiagnostico(parseInt(id), req.body);
+      const data = await this.diagnosticoService.updateDiagnostico(
+        parseInt(id),
+        req.body
+      );
       if (!data.affected) {
         return this.httpResponse.NotFound(res, "Hay un error al actualizar");
       }
@@ -59,11 +64,28 @@ export class DiagnosticoController {
   async deteleDiagnostico(req: Request, res: Response) {
     const { id } = req.params;
     try {
-      const data = await this.diagnosticoService.deleteDiagnostico(parseInt(id));
+      const data = await this.diagnosticoService.deleteDiagnostico(
+        parseInt(id)
+      );
       if (!data.affected) {
         return this.httpResponse.NotFound(res, "Hay un error al actualizar");
       }
 
+      return this.httpResponse.Ok(res, data);
+    } catch (e) {
+      return this.httpResponse.NotFound(res, e);
+    }
+  }
+
+  async listForId(req: Request, res: Response) {
+    const { id } = req.params;
+    try {
+      const data = await this.diagnosticoService.listDiagnosticoForId(
+        parseInt(id)
+      );
+      if (!data) {
+        return this.httpResponse.NotFound(res, "No existe datos");
+      }
       return this.httpResponse.Ok(res, data);
     } catch (e) {
       return this.httpResponse.NotFound(res, e);

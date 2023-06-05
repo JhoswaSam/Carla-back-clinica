@@ -15,5 +15,7 @@ export class DiagnosticoRouter extends RouterBase<DiagnosticoController,Diagnost
         
         this.router.put('/updateDiagnostico/:id',(req,res)=>this.controller.updateDiagnostico(req,res));
         this.router.delete('/deleteDiagnostico/:id',(req,res)=>this.controller.deteleDiagnostico(req,res));
+
+        this.router.get('/diagnosticos/:id/paciente',(req,res)=>this.controller.listForId(req,res));
     }
 }

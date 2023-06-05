@@ -27,4 +27,12 @@ export class DiagnosticoService extends ServiceBase<DiagnosticoEntity> {
   ): Promise<UpdateResult> {
     return (await this.execRepository).update(Id, infoUpdate);
   }
+
+  async listDiagnosticoForId(id: number):Promise<DiagnosticoEntity|any>{
+    return (await this.execRepository)
+      .createQueryBuilder("diagnostico")
+      .where("diagnostico.paciente_id_paciente = :id", { id: id })
+      .getMany();
+  }
+
 }

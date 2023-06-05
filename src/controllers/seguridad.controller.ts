@@ -32,10 +32,8 @@ export class AuthController extends Security{
             }
 
             res.header("Content-Type", "application/json");
-            res.cookie("accessToken", encode.accessToken, {maxAge: 60000*60});
-            res.write(JSON.stringify(encode));
-            res.end();
-          
+            res.cookie("accessToken", encode.accessToken);
+            return this.httpResponse.Ok(res,encode);
         } catch (error) {
             console.error(error);
             return this.httpResponse.Error(res,error)
