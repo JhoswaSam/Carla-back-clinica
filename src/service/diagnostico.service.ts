@@ -4,6 +4,7 @@ import { DiagnosticoEntity } from "../models/diagnostico.entity";
 import QueryString from "qs";
 import { DiagnosticoDTO } from "../dto/diagnostico.dto";
 import { DeleteResult, UpdateResult } from "typeorm";
+import { PacienteEntity } from "../models/paciente.entity";
 
 export class DiagnosticoService extends ServiceBase<DiagnosticoEntity> {
   constructor() {
@@ -28,11 +29,32 @@ export class DiagnosticoService extends ServiceBase<DiagnosticoEntity> {
     return (await this.execRepository).update(Id, infoUpdate);
   }
 
-  async listDiagnosticoForId(id: number):Promise<DiagnosticoEntity|any>{
+  async listDiagnosticoForId(id: number): Promise<DiagnosticoEntity | any> {
     return (await this.execRepository)
       .createQueryBuilder("diagnostico")
       .where("diagnostico.paciente_id_paciente = :id", { id: id })
       .getMany();
   }
 
+  async listDiagnosticoWithPaciente(): Promise<any> {
+    // return (await this.execRepository)
+    //   .createQueryBuilder("diagnostico")
+    //   .addSelect("diagnostico.paciente_id_paciente")
+    //   .getMany();
+
+    // return (await this.execRepository)
+    //     .createQueryBuilder("diagnostico")
+    //     .innerJoinAndSelect('diagnostico.paciente','paciente')
+    //     .getQuery();
+
+    // return (await this.execRepository)
+    //   .createQueryBuilder("diagnostico")
+    //   .leftJoin('diagnostico.paciente', 'paciente')
+    //   .getQuery();
+
+    return (await this.execRepository)
+      .createQueryBuilder("diagnostico")
+      .leftJoinAndMapOne("diagnostico.id", PacienteEntity,'paciente',"paciente.id_paciente = diagnostico.paciente_id_paciente")
+      .getMany();
+  }
 }

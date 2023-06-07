@@ -91,4 +91,17 @@ export class DiagnosticoController {
       return this.httpResponse.NotFound(res, e);
     }
   }
+
+  async listDiagnosticoWithPaciente(req: Request, res: Response){
+    try {
+      const data = await this.diagnosticoService.listDiagnosticoWithPaciente();
+      if (!data) {
+        return this.httpResponse.NotFound(res, "No existen datos");
+      }
+      return this.httpResponse.Ok(res, data);
+    } catch (e) {
+      return this.httpResponse.NotFound(res, e);
+    }
+  }
+
 }

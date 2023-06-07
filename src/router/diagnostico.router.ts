@@ -1,3 +1,4 @@
+import { textChangeRangeIsUnchanged } from "typescript";
 import { RouterBase } from "../config/router";
 import { DiagnosticoController } from "../controllers/diagnostico.controller";
 import { DiagnosticoMiddleware } from "../middleware/diagnostico.middleware";
@@ -17,5 +18,7 @@ export class DiagnosticoRouter extends RouterBase<DiagnosticoController,Diagnost
         this.router.delete('/deleteDiagnostico/:id',(req,res)=>this.controller.deteleDiagnostico(req,res));
 
         this.router.get('/diagnosticos/:id/paciente',(req,res)=>this.controller.listForId(req,res));
+
+        this.router.get('/diagnosticoswithpaciente',(req,res)=>this.controller.listDiagnosticoWithPaciente(req,res));
     }
 }
